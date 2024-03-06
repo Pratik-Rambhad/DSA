@@ -1,0 +1,87 @@
+/******************************************************************************
+
+                            Online Java Compiler.
+                Code, Compile, Run and Debug java program online.
+Write your code in this editor and press "Run" button to execute it.
+
+*******************************************************************************/
+import java.util.Scanner;
+import java.util.ArrayList;
+public class Main
+{
+    static ArrayList<ArrayList<Integer>> listOfLists = new ArrayList<>();
+   
+    public static void sum_of_subset(int sum_req,int soln[],int arr[],int size,int start_index,int soln_index)
+        {
+           
+                  if(sum_req ==0)//we got solution
+                  {
+                      ArrayList<Integer> solnList1 = new ArrayList<>();
+                        // System.out.println("\nSolution : ");
+                         for(int i=0;i<soln_index;i++)
+                         {
+                              //System.out.printf("%2d",soln[i]);
+                              solnList1.add(soln[i]);
+                         }
+                         listOfLists.add(solnList1);
+                  }
+                  else if(sum_req<0||start_index== (size))
+                  {
+                      return;
+                  }
+                  else
+                  {
+                   
+             
+                      //first functn call : reject element and  recursive function call
+                      int next_index = start_index+1;
+                      // first recursive  functn call
+                      sum_of_subset(sum_req,soln, arr, size,next_index,soln_index);
+                     
+                      //second functn call : take element and  recursive  function call
+                      //Add element into solution array
+                      soln[soln_index]= arr[start_index];
+                      soln_index++;
+                      // second recursive  functn call
+                      int new_sum_req = sum_req-arr[start_index];
+                      sum_of_subset( new_sum_req , soln,arr, size,next_index,soln_index);
+                  }
+        }
+           
+   
+public static void main(String[] args) {
+        // System.out.println("Hello World");
+            int sum_req;
+            Scanner sc = new Scanner(System.in);
+           
+            System.out.println("Enter size of array: ");
+            int size = sc.nextInt();
+            int arr[] = new int[size];
+            int soln[] = new int[size];
+           
+            System.out.println("Enter array elements: ");
+            for(int i=0;i<size;i++)
+             arr[i] = sc.nextInt();
+           
+            System.out.println("Enter sum of subset ");
+             sum_req = sc.nextInt();
+           
+            //function_call(sum_req, soln);
+            sum_of_subset(sum_req,soln, arr,size,0,0);
+           
+           
+      // Print the elements of the listOfLists
+        System.out.println("\nsolution :");
+        for (ArrayList<Integer> list : listOfLists) {
+            for (int i = 0; i < list.size(); i++) {
+                System.out.printf("%2d", list.get(i));
+            }
+            System.out.println();
+        }
+   
+}
+
+
+
+
+}
